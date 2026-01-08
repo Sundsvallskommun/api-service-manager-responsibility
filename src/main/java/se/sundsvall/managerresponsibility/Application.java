@@ -1,4 +1,4 @@
-package se.sundsvall.template;
+package se.sundsvall.managerresponsibility;
 
 import static org.springframework.boot.SpringApplication.run;
 
