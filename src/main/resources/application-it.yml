@@ -1,6 +1,16 @@
 #========================================
 # Test profile settings (IT tests)
 #========================================
+spring:
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:sqlserver:2019-CU28-ubuntu-20.04:///
+  sql:
+    init:
+      schema-locations: classpath:db/schema.sql
+      data-locations: classpath:db/scripts/cleanup.sql,classpath:db/scripts/testdata.sql
+      encoding: utf-8
+      mode: always
 logging:
   level:
     root: INFO
