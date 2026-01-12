@@ -32,7 +32,7 @@ class PersonsResourceTest {
 
 		// Arrange
 		final var personId = UUID.randomUUID().toString();
-		final var expectedResult = List.of(ManagerResponsibility.create().withId("id").withLoginName("loginName").withOrgList(List.of("org1")));
+		final var expectedResult = List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1")));
 
 		// when(managerResponsibilityServiceMock.get()).thenReturn(result);
 

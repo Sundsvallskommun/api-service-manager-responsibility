@@ -15,7 +15,7 @@ import se.sundsvall.managerresponsibility.api.model.ManagerResponsibility;
 
 @ActiveProfiles("junit")
 @SpringBootTest(classes = Application.class, webEnvironment = RANDOM_PORT)
-class OrganizationResourceTest {
+class OrganizationsResourceTest {
 
 	private static final String MUNICIPALITY_ID = "2281";
 
@@ -31,7 +31,7 @@ class OrganizationResourceTest {
 
 		// Arrange
 		final var orgId = "orgId";
-		final var expectedResult = List.of(ManagerResponsibility.create().withId("id").withLoginName("loginName").withOrgList(List.of("org1")));
+		final var expectedResult = List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1")));
 
 		// when(managerResponsibilityServiceMock.get()).thenReturn(result);
 

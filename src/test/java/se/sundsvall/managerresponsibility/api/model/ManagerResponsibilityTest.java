@@ -28,19 +28,16 @@ class ManagerResponsibilityTest {
 	@Test
 	void testBuilderMethods() {
 
-		final var id = "id";
 		final var loginName = "loginName";
 		final var orgList = List.of("org1");
 		final var personId = UUID.randomUUID().toString();
 
 		final var bean = ManagerResponsibility.create()
-			.withId(id)
 			.withLoginName(loginName)
 			.withOrgList(orgList)
 			.withPersonId(personId);
 
 		assertThat(bean).isNotNull().hasNoNullFieldsOrProperties();
-		assertThat(bean.getId()).isEqualTo(id);
 		assertThat(bean.getLoginName()).isEqualTo(loginName);
 		assertThat(bean.getOrgList()).isEqualTo(orgList);
 		assertThat(bean.getPersonId()).isEqualTo(personId);

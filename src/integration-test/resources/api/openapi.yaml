@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "1.0"
 servers:
-- url: http://localhost:51324
+- url: http://localhost:59077
   description: Generated server url
 paths:
   /{municipalityId}/persons/{personId}/manager-responsibilities:
@@ -174,9 +174,9 @@ components:
           additionalProperties: {}
         status:
           $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
     StatusType:
       type: object
@@ -306,9 +306,9 @@ components:
           additionalProperties: {}
         status:
           $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
         suppressed:
           type: array
@@ -354,12 +354,6 @@ components:
       type: object
       description: ManagerResponsibility model
       properties:
-        id:
-          type: string
-          description: The ID
-          examples:
-          - "123456"
-          readOnly: true
         personId:
           type: string
           description: The manager person ID

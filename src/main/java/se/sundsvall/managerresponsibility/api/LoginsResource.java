@@ -38,6 +38,6 @@ class LoginsResource {
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@Parameter(name = "loginName", description = "Login name", example = "joe01doe") @PathVariable final String loginName) {
 
-		return ok(List.of(ManagerResponsibility.create().withId("id").withLoginName("loginName").withOrgList(List.of("org1"))));
+		return ok(List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1"))));
 	}
 }

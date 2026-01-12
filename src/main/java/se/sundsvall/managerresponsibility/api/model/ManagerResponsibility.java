@@ -9,9 +9,6 @@ import java.util.Objects;
 @Schema(description = "ManagerResponsibility model", accessMode = READ_ONLY)
 public class ManagerResponsibility {
 
-	@Schema(description = "The ID", examples = "123456", accessMode = READ_ONLY)
-	private String id;
-
 	@Schema(description = "The manager person ID", examples = "35532a17-26a0-4438-970c-375465ff1aff", accessMode = READ_ONLY)
 	private String personId;
 
@@ -23,19 +20,6 @@ public class ManagerResponsibility {
 
 	public static ManagerResponsibility create() {
 		return new ManagerResponsibility();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public ManagerResponsibility withId(String id) {
-		this.id = id;
-		return this;
 	}
 
 	public String getPersonId() {
@@ -79,7 +63,7 @@ public class ManagerResponsibility {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, loginName, orgList, personId);
+		return Objects.hash(loginName, orgList, personId);
 	}
 
 	@Override
@@ -94,11 +78,11 @@ public class ManagerResponsibility {
 			return false;
 		}
 		ManagerResponsibility other = (ManagerResponsibility) obj;
-		return Objects.equals(id, other.id) && Objects.equals(loginName, other.loginName) && Objects.equals(orgList, other.orgList) && Objects.equals(personId, other.personId);
+		return Objects.equals(loginName, other.loginName) && Objects.equals(orgList, other.orgList) && Objects.equals(personId, other.personId);
 	}
 
 	@Override
 	public String toString() {
-		return "ManagerResponsibility [id=" + id + ", personId=" + personId + ", loginName=" + loginName + ", orgList=" + orgList + "]";
+		return "ManagerResponsibility [personId=" + personId + ", loginName=" + loginName + ", orgList=" + orgList + "]";
 	}
 }
