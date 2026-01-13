@@ -1,0 +1,1 @@
+truncate table org_edw.vChefOrganisationer;
