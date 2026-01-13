@@ -41,7 +41,6 @@ class ManagerResponsibilityRepositoryTest {
 			.hasSize(4)
 			.extracting(ManagerResponsibilityEntity::getLoginName)
 			.containsExactlyInAnyOrder("user01", "user02", "user03", "user04");
-
 	}
 
 	@Test
@@ -65,16 +64,95 @@ class ManagerResponsibilityRepositoryTest {
 		final var result = managerResponsibilityRepository.findByOrgId(orgId);
 
 		// Assert
+		assertThat(result).hasSize(1);
+		final var entity = result.getFirst();
+		assertThat(entity.getLoginName()).isEqualTo("user01");
+		assertThat(entity.toOrgIds()).containsExactlyInAnyOrder("9937", "1281", "1302");
+	}
+
+	@Test
+	void findByOrgIdOverlapping() {
+
+		// Arrange
+		final var orgId = "1401";
+
+		// Act
+		final var result = managerResponsibilityRepository.findByOrgId(orgId);
+
+		// Assert
 		assertThat(result)
 			.isNotEmpty()
-			.extracting(ManagerResponsibilityEntity::toOrgIds)
-			.allSatisfy(orgIds -> assertThat(orgIds).containsExactlyInAnyOrder("9937", "1281", "1302"));
+			.hasSize(2)
+			.extracting(ManagerResponsibilityEntity::getLoginName)
+			.containsExactlyInAnyOrder("user03", "user04");
 	}
 
 	void findByOrgIdNotFound() {
 
 		// Act
 		final var result = managerResponsibilityRepository.findByOrgId("non-existing");
+
+		// Assert
+		assertThat(result)
+			.isNotNull()
+			.isEmpty();
+	}
+
+	@Test
+	void findByPersonId() {
+
+		// Arrange
+		final var personId = "a12f98c4-8b42-4f3a-9f12-abcdef123456";
+
+		// Act
+		final var result = managerResponsibilityRepository.findByPersonId(personId);
+
+		// Assert
+		assertThat(result).hasSize(1);
+		final var entity = result.getFirst();
+		assertThat(entity.toOrgIds()).containsExactlyInAnyOrder("9936");
+		assertThat(entity.getLoginName()).isEqualTo("user02");
+	}
+
+	@Test
+	void findByPersonIdNotFound() {
+
+		// Arrange
+		final var personId = "51d88368-0c7e-4b8b-b9e2-6bf1e6999a36"; // non existing
+
+		// Act
+		final var result = managerResponsibilityRepository.findByPersonId(personId);
+
+		// Assert
+		assertThat(result)
+			.isNotNull()
+			.isEmpty();
+	}
+
+	@Test
+	void findByLoginName() {
+
+		// Arrange
+		final var loginName = "user02";
+
+		// Act
+		final var result = managerResponsibilityRepository.findByLoginName(loginName);
+
+		// Assert
+		assertThat(result).hasSize(1);
+		final var entity = result.getFirst();
+		assertThat(entity.toOrgIds()).containsExactlyInAnyOrder("9936");
+		assertThat(entity.getPersonId()).isEqualToIgnoringCase("a12f98c4-8b42-4f3a-9f12-abcdef123456");
+	}
+
+	@Test
+	void findByLoginNameNotFound() {
+
+		// Arrange
+		final var loginName = "non-existing";
+
+		// Act
+		final var result = managerResponsibilityRepository.findByLoginName(loginName);
 
 		// Assert
 		assertThat(result)

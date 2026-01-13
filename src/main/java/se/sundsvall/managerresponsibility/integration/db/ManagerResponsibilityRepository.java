@@ -14,4 +14,8 @@ public interface ManagerResponsibilityRepository extends JpaRepository<ManagerRe
 
 	@Query(value = "SELECT * FROM org_edw.vChefOrganisationer t WHERE CONCAT('|', t.OrgList, '|') LIKE CONCAT('%|', :orgId, '|%')", nativeQuery = true)
 	List<ManagerResponsibilityEntity> findByOrgId(@Param("orgId") String orgId);
+
+	List<ManagerResponsibilityEntity> findByPersonId(String personId);
+
+	List<ManagerResponsibilityEntity> findByLoginName(String loginName);
 }

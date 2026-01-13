@@ -31,8 +31,8 @@ public class ManagerResponsibilityEntity {
 	@Transient
 	public List<String> toOrgIds() {
 		return Optional.ofNullable(this.orgList)
-			.filter(StringUtils::hasText)
 			.stream()
+			.filter(StringUtils::hasText)
 			.flatMap(s -> Arrays.stream(s.split("\\|")))
 			.map(String::trim)
 			.filter(s -> !s.isEmpty())
