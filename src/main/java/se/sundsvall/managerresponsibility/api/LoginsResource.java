@@ -21,6 +21,7 @@ import org.zalando.problem.Problem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import se.sundsvall.dept44.common.validators.annotation.ValidMunicipalityId;
 import se.sundsvall.managerresponsibility.api.model.ManagerResponsibility;
+import se.sundsvall.managerresponsibility.service.ManagerResponsibilityService;
 
 @RestController
 @Validated
@@ -32,12 +33,18 @@ import se.sundsvall.managerresponsibility.api.model.ManagerResponsibility;
 @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 class LoginsResource {
 
+	private ManagerResponsibilityService managerResponsibilityService;
+
+	public LoginsResource(final ManagerResponsibilityService managerResponsibilityService) {
+		this.managerResponsibilityService = managerResponsibilityService;
+	}
+
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	@Operation(operationId = "getManagerResponsibilitiesByLoginName", summary = "Get manager responsibilities", responses = @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true))
 	ResponseEntity<List<ManagerResponsibility>> getManagerResponsibilitiesByLoginName(
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@Parameter(name = "loginName", description = "Login name", example = "joe01doe") @PathVariable final String loginName) {
 
-		return ok(List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1"))));
+		return ok(managerResponsibilityService.findByLoginName(loginName));
 	}
 }

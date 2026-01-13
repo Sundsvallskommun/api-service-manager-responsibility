@@ -67,7 +67,7 @@ class ManagerResponsibilityRepositoryTest {
 		assertThat(result).hasSize(1);
 		final var entity = result.getFirst();
 		assertThat(entity.getLoginName()).isEqualTo("user01");
-		assertThat(entity.toOrgIds()).containsExactlyInAnyOrder("9937", "1281", "1302");
+		assertThat(entity.getOrgList()).isEqualTo("9937|1281|1302");
 	}
 
 	@Test
@@ -110,7 +110,7 @@ class ManagerResponsibilityRepositoryTest {
 		// Assert
 		assertThat(result).hasSize(1);
 		final var entity = result.getFirst();
-		assertThat(entity.toOrgIds()).containsExactlyInAnyOrder("9936");
+		assertThat(entity.getOrgList()).isEqualTo("9936");
 		assertThat(entity.getLoginName()).isEqualTo("user02");
 	}
 
@@ -141,7 +141,7 @@ class ManagerResponsibilityRepositoryTest {
 		// Assert
 		assertThat(result).hasSize(1);
 		final var entity = result.getFirst();
-		assertThat(entity.toOrgIds()).containsExactlyInAnyOrder("9936");
+		assertThat(entity.getOrgList()).isEqualTo("9936");
 		assertThat(entity.getPersonId()).isEqualToIgnoringCase("a12f98c4-8b42-4f3a-9f12-abcdef123456");
 	}
 

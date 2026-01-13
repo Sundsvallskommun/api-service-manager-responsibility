@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.managerresponsibility.integration.db.model.ManagerResponsibilityEntity;
 
 @Transactional(readOnly = true)
-@CircuitBreaker(name = "managerRepository")
+@CircuitBreaker(name = "managerResponsibilityRepository")
 public interface ManagerResponsibilityRepository extends JpaRepository<ManagerResponsibilityEntity, Long> {
 
 	@Query(value = "SELECT * FROM org_edw.vChefOrganisationer t WHERE CONCAT('|', t.OrgList, '|') LIKE CONCAT('%|', :orgId, '|%')", nativeQuery = true)
