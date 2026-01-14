@@ -85,8 +85,8 @@ Configuration is crucial for the application to run successfully. Ensure all nec
   spring:
     datasource:
       url: jdbc:sqlserver://<server address>:<port>;databaseName=<database name>;trustServerCertificate=true
-      username:<database user name>
-      password:<database user password>
+      username: <database user name>
+      password: <database user password>
   ```
 
 ### Database Initialization
