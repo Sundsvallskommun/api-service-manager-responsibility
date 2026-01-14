@@ -1,6 +1,6 @@
 # ManagerResponsibility
 
-_This microservice provides read-only access to managerial organizational responsibilities. It exposes which organizations a person (manager) is responsible for and allows lookup from both person and organization perspectives using a RESTful resource hierarchy.The service consumes an externally owned database table and does not modify the underlying data._
+_This microservice provides read-only access to managerial organizational responsibilities. It exposes which organizations a person (manager) is responsible for and allows lookup from both person and organization perspectives using a REST-ful resource hierarchy. The service consumes an externally owned database table and does not modify the underlying data._
 
 ## Getting Started
 
