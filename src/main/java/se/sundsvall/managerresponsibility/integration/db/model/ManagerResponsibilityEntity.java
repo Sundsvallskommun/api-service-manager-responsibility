@@ -4,12 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import org.springframework.util.StringUtils;
 
 @Entity
 @Table(schema = "org_edw", name = "vChefOrganisationer")
@@ -27,17 +22,6 @@ public class ManagerResponsibilityEntity {
 
 	@Column(name = "OrgList", insertable = false, updatable = false)
 	private String orgList;
-
-	@Transient
-	public List<String> toOrgIds() {
-		return Optional.ofNullable(this.orgList)
-			.stream()
-			.filter(StringUtils::hasText)
-			.flatMap(s -> Arrays.stream(s.split("\\|")))
-			.map(String::trim)
-			.filter(s -> !s.isEmpty())
-			.toList();
-	}
 
 	public static ManagerResponsibilityEntity create() {
 		return new ManagerResponsibilityEntity();

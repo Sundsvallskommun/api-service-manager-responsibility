@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class ManagerResponsibilityTest {
 
 	@Test
-	void testBean() {
+	void bean() {
 		assertThat(ManagerResponsibility.class, allOf(
 			hasValidBeanConstructor(),
 			hasValidGettersAndSetters(),
@@ -26,7 +26,7 @@ class ManagerResponsibilityTest {
 	}
 
 	@Test
-	void testBuilderMethods() {
+	void builderMethods() {
 
 		final var loginName = "loginName";
 		final var orgList = List.of("org1");
@@ -44,7 +44,7 @@ class ManagerResponsibilityTest {
 	}
 
 	@Test
-	void testNoDirtOnCreatedBean() {
+	void noDirtOnCreatedBean() {
 		assertThat(ManagerResponsibility.create()).hasAllNullFieldsOrProperties();
 		assertThat(new ManagerResponsibility()).hasAllNullFieldsOrProperties();
 	}
