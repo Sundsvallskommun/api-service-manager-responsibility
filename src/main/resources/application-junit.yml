@@ -11,6 +11,19 @@ spring:
       data-locations: classpath:db/scripts/cleanup.sql,classpath:db/scripts/testdata.sql
       encoding: utf-8
       mode: always
+  security:
+    oauth2:
+      client:
+        provider:
+          employee:
+            token-uri: http://token.url
+        registration:
+          employee:
+            client-id: the-client-id
+            client-secret: the-client
 logging:
   level:
     root: INFO
+integration:
+  employee:
+    url: http://employee.url

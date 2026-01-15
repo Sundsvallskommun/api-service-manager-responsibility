@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.StringUtils.lowerCase;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import se.sundsvall.managerresponsibility.api.model.ManagerResponsibility;
@@ -17,6 +18,7 @@ public final class ManagerResponsibilityMapper {
 	public static List<ManagerResponsibility> toManagerResponsibilityList(List<ManagerResponsibilityEntity> managerResponsibilityEntityList) {
 		return Optional.ofNullable(managerResponsibilityEntityList).orElse(emptyList()).stream()
 			.map(ManagerResponsibilityMapper::toManagerResponsibility)
+			.filter(Objects::nonNull)
 			.toList();
 	}
 
