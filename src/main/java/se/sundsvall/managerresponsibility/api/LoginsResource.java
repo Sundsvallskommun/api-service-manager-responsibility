@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Pattern;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,9 +34,9 @@ import se.sundsvall.managerresponsibility.service.ManagerResponsibilityService;
 @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 class LoginsResource {
 
-	private ManagerResponsibilityService managerResponsibilityService;
+	private final ManagerResponsibilityService managerResponsibilityService;
 
-	public LoginsResource(final ManagerResponsibilityService managerResponsibilityService) {
+	LoginsResource(final ManagerResponsibilityService managerResponsibilityService) {
 		this.managerResponsibilityService = managerResponsibilityService;
 	}
 
@@ -43,7 +44,7 @@ class LoginsResource {
 	@Operation(operationId = "getManagerResponsibilitiesByLoginName", summary = "Get manager responsibilities", responses = @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true))
 	ResponseEntity<List<ManagerResponsibility>> getManagerResponsibilitiesByLoginName(
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
-		@Parameter(name = "loginName", description = "Login name", example = "joe01doe") @PathVariable final String loginName) {
+		@Parameter(name = "loginName", description = "Login name", example = "joe01doe") @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "loginName can only contain letters, digits and underscores") @PathVariable final String loginName) {
 
 		return ok(managerResponsibilityService.findByLoginName(loginName));
 	}

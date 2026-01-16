@@ -34,9 +34,9 @@ import se.sundsvall.managerresponsibility.service.ManagerResponsibilityService;
 @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 class PersonsResource {
 
-	private ManagerResponsibilityService managerResponsibilityService;
+	private final ManagerResponsibilityService managerResponsibilityService;
 
-	public PersonsResource(final ManagerResponsibilityService managerResponsibilityService) {
+	PersonsResource(final ManagerResponsibilityService managerResponsibilityService) {
 		this.managerResponsibilityService = managerResponsibilityService;
 	}
 

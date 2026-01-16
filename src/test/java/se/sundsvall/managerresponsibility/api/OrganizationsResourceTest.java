@@ -34,7 +34,7 @@ class OrganizationsResourceTest {
 	void getManagerResponsibilitiesByOrgId() {
 
 		// Arrange
-		final var orgId = "orgId";
+		final var orgId = "123";
 		final var expectedResult = List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1")));
 
 		when(managerResponsibilityServiceMock.findByOrgId(orgId)).thenReturn(expectedResult);

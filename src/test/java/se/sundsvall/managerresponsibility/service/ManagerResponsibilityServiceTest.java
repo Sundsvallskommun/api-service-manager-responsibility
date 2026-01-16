@@ -2,12 +2,16 @@ package se.sundsvall.managerresponsibility.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -40,6 +44,19 @@ class ManagerResponsibilityServiceTest {
 		verifyNoMoreInteractions(repositoryMock);
 	}
 
+	@ParameterizedTest
+	@NullAndEmptySource
+	@ValueSource(strings = " ")
+	void findByOrgIdWithNullOrBlank(final String orgId) {
+
+		// Act
+		final var result = service.findByOrgId(orgId);
+
+		// Assert
+		assertThat(result).isNotNull().isEmpty();
+		verifyNoInteractions(repositoryMock);
+	}
+
 	@Test
 	void findByPersonId() {
 
@@ -57,6 +74,19 @@ class ManagerResponsibilityServiceTest {
 		verifyNoMoreInteractions(repositoryMock);
 	}
 
+	@ParameterizedTest
+	@NullAndEmptySource
+	@ValueSource(strings = " ")
+	void findByPersonIdWithNullOrBlank(final String personId) {
+
+		// Act
+		final var result = service.findByPersonId(personId);
+
+		// Assert
+		assertThat(result).isNotNull().isEmpty();
+		verifyNoInteractions(repositoryMock);
+	}
+
 	@Test
 	void findByLoginName() {
 
@@ -72,5 +102,18 @@ class ManagerResponsibilityServiceTest {
 		assertThat(result).isNotNull();
 		verify(repositoryMock).findByLoginName(loginName);
 		verifyNoMoreInteractions(repositoryMock);
+	}
+
+	@ParameterizedTest
+	@NullAndEmptySource
+	@ValueSource(strings = " ")
+	void findByLoginNameWithNullOrBlank(final String loginName) {
+
+		// Act
+		final var result = service.findByLoginName(loginName);
+
+		// Assert
+		assertThat(result).isNotNull().isEmpty();
+		verifyNoInteractions(repositoryMock);
 	}
 }

@@ -1,8 +1,5 @@
-package se.sundsvall.managerresponsibility.integration.db.employee.configuration;
+package se.sundsvall.managerresponsibility.integration.employee.configuration;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
-import java.util.List;
 import org.springframework.cloud.openfeign.FeignBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -19,7 +16,7 @@ public class EmployeeConfiguration {
 	@Bean
 	FeignBuilderCustomizer feignBuilderCustomizer(final EmployeeProperties employeeProperties, final ClientRegistrationRepository clientRegistrationRepository) {
 		return FeignMultiCustomizer.create()
-			.withErrorDecoder(new ProblemErrorDecoder(CLIENT_ID, List.of(NOT_FOUND.value())))
+			.withErrorDecoder(new ProblemErrorDecoder(CLIENT_ID))
 			.withRequestTimeoutsInSeconds(employeeProperties.connectTimeout(), employeeProperties.readTimeout())
 			.withRetryableOAuth2InterceptorForClientRegistration(clientRegistrationRepository.findByRegistrationId(CLIENT_ID))
 			.composeCustomizersToOne();

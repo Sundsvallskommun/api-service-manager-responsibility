@@ -1,4 +1,4 @@
-package se.sundsvall.managerresponsibility.integration.db.employee.configuration;
+package se.sundsvall.managerresponsibility.integration.employee.configuration;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

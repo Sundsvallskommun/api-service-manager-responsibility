@@ -73,6 +73,7 @@ paths:
         description: Organization ID
         required: true
         schema:
+          pattern: "^[0-9]+$"
           type: string
         example: 123
       responses:
@@ -117,6 +118,7 @@ paths:
         description: Login name
         required: true
         schema:
+          pattern: "^[a-zA-Z0-9_]+$"
           type: string
         example: joe01doe
       responses:

@@ -1,4 +1,4 @@
-package se.sundsvall.managerresponsibility.integration.db.employee.configuration;
+package se.sundsvall.managerresponsibility.integration.employee.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.DefaultValue;

@@ -1,11 +1,11 @@
-package se.sundsvall.managerresponsibility.integration.db.employee.configuration;
+package se.sundsvall.managerresponsibility.integration.employee.configuration;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static se.sundsvall.managerresponsibility.integration.db.employee.configuration.EmployeeConfiguration.CLIENT_ID;
+import static se.sundsvall.managerresponsibility.integration.employee.configuration.EmployeeConfiguration.CLIENT_ID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,6 +64,7 @@ class EmployeeConfigurationTest {
 			verify(feignMultiCustomizerSpy).composeCustomizersToOne();
 
 			assertThat(errorDecoderCaptor.getValue()).hasFieldOrPropertyWithValue("integrationName", CLIENT_ID);
+			assertThat(errorDecoderCaptor.getValue()).hasFieldOrPropertyWithValue("bypassResponseCodes", null);
 			assertThat(customizer).isSameAs(feignBuilderCustomizerMock);
 		}
 	}
