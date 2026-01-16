@@ -2,6 +2,29 @@
 
 _This microservice provides read-only access to managerial organizational responsibilities. It exposes which organizations a person (manager) is responsible for and allows lookup from both person and organization perspectives using a REST-ful resource hierarchy. The service consumes an externally owned database table and does not modify the underlying data._
 
+## Service Description
+
+The ManagerResponsibility service answers questions about managerial organizational responsibilities within Sundsvalls kommun:
+
+- **Which organizations is a specific manager responsible for?** - Look up by person ID or login name to get a list of organization IDs the manager oversees.
+- **Who is the manager responsible for a specific organization?** - Look up by organization ID to find the responsible manager(s).
+
+### Data Model
+
+The service returns `ManagerResponsibility` objects containing:
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| `personId` | The manager's unique person ID (UUID) | `35532a17-26a0-4438-970c-375465ff1aff` |
+| `loginName` | The manager's login name | `joe01doe` |
+| `orgList` | List of organization IDs the manager is responsible for | `["123", "456", "789"]` |
+
+### Use Cases
+
+- **HR systems** - Determine reporting structures and managerial chains
+- **Access control** - Verify if a person has managerial responsibility for an organization
+- **Organizational dashboards** - Display responsibility assignments
+
 ## Getting Started
 
 ### Prerequisites
