@@ -51,4 +51,27 @@ class LoginsResourceFailuresTest {
 
 		verifyNoInteractions(managerResponsibilityServiceMock);
 	}
+
+	@Test
+	void getManagerResponsibilitiesByLoginNameInvalidLoginName() {
+
+		// Act
+		final var response = webTestClient.get()
+			.uri("/{municipalityId}/logins/{loginName}/manager-responsibilities", "2281", "invalid-login!")
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		// Assert
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations())
+			.extracting(Violation::getField, Violation::getMessage)
+			.containsExactly(tuple("getManagerResponsibilitiesByLoginName.loginName", "loginName can only contain letters, digits and underscores"));
+
+		verifyNoInteractions(managerResponsibilityServiceMock);
+	}
 }

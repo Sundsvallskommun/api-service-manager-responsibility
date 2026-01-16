@@ -2,6 +2,7 @@ package se.sundsvall.managerresponsibility.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -52,5 +53,6 @@ class LoginsResourceTest {
 		// Assert
 		assertThat(result).isEqualTo(expectedResult);
 		verify(managerResponsibilityServiceMock).findByLoginName(loginName);
+		verifyNoMoreInteractions(managerResponsibilityServiceMock);
 	}
 }

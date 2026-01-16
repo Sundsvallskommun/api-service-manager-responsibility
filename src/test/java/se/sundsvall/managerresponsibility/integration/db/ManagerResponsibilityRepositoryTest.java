@@ -87,6 +87,7 @@ class ManagerResponsibilityRepositoryTest {
 			.containsExactlyInAnyOrder("user03", "user04");
 	}
 
+	@Test
 	void findByOrgIdNotFound() {
 
 		// Act

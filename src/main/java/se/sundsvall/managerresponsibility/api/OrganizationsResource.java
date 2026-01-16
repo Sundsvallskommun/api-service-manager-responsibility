@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Pattern;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,9 +34,9 @@ import se.sundsvall.managerresponsibility.service.ManagerResponsibilityService;
 @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 class OrganizationsResource {
 
-	private ManagerResponsibilityService managerResponsibilityService;
+	private final ManagerResponsibilityService managerResponsibilityService;
 
-	public OrganizationsResource(final ManagerResponsibilityService managerResponsibilityService) {
+	OrganizationsResource(final ManagerResponsibilityService managerResponsibilityService) {
 		this.managerResponsibilityService = managerResponsibilityService;
 	}
 
@@ -43,7 +44,7 @@ class OrganizationsResource {
 	@Operation(operationId = "getManagerResponsibilitiesByOrganizationId", summary = "Get manager responsibilities", responses = @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true))
 	ResponseEntity<List<ManagerResponsibility>> getManagerResponsibilitiesByOrganizationId(
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
-		@Parameter(name = "orgId", description = "Organization ID", example = "123") @PathVariable final String orgId) {
+		@Parameter(name = "orgId", description = "Organization ID", example = "123") @Pattern(regexp = "^[0-9]+$", message = "orgId must contain only digits") @PathVariable final String orgId) {
 
 		return ok(managerResponsibilityService.findByOrgId(orgId));
 	}

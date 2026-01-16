@@ -2,6 +2,29 @@
 
 _This microservice provides read-only access to managerial organizational responsibilities. It exposes which organizations a person (manager) is responsible for and allows lookup from both person and organization perspectives using a REST-ful resource hierarchy. The service consumes an externally owned database table and does not modify the underlying data._
 
+## Service Description
+
+The ManagerResponsibility service answers questions about managerial organizational responsibilities within Sundsvalls kommun:
+
+- **Which organizations is a specific manager responsible for?** - Look up by person ID or login name to get a list of organization IDs the manager oversees.
+- **Who is the manager responsible for a specific organization?** - Look up by organization ID to find the responsible manager(s).
+
+### Data Model
+
+The service returns `ManagerResponsibility` objects containing:
+
+|    Field    |                       Description                       |                Example                 |
+|-------------|---------------------------------------------------------|----------------------------------------|
+| `personId`  | The manager's unique person ID (UUID)                   | `35532a17-26a0-4438-970c-375465ff1aff` |
+| `loginName` | The manager's login name                                | `joe01doe`                             |
+| `orgList`   | List of organization IDs the manager is responsible for | `["123", "456", "789"]`                |
+
+### Use Cases
+
+- **HR systems** - Determine reporting structures and managerial chains
+- **Access control** - Verify if a person has managerial responsibility for an organization
+- **Organizational dashboards** - Display responsibility assignments
+
 ## Getting Started
 
 ### Prerequisites
@@ -40,9 +63,12 @@ _This microservice provides read-only access to managerial organizational respon
 
 This microservice depends on the following services:
 
-- **MS SQL database**
-  - **Purpose:** Database where domain data is stored
+- **MS SQL Server database**
+  - **Purpose:** Read-only access to the `org_edw.vChefOrganisationer` view containing manager responsibility data
   - **Repository:** External database managed by third party
+- **Employee API** (optional)
+  - **Purpose:** Lookup employee portal data by domain and login name
+  - **Configuration:** Requires OAuth2 client credentials (see Configuration section)
 
 Ensure that these services are running and properly configured before starting this microservice.
 
@@ -52,18 +78,50 @@ Access the API documentation via Swagger UI:
 
 - **Swagger UI:** [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
 
-Alternatively, refer to the `openapi.yml` file located in the project's root directory for the OpenAPI specification.
+Alternatively, refer to the OpenAPI specification file at `src/integration-test/resources/api/openapi.yaml`.
 
 ## Usage
 
 ### API Endpoints
 
-Refer to the [API Documentation](#api-documentation) for detailed information on available endpoints.
+The service provides three lookup endpoints, all returning a list of `ManagerResponsibility` objects:
 
-### Example Request
+|                                Endpoint                                |                         Description                         |
+|------------------------------------------------------------------------|-------------------------------------------------------------|
+| `GET /{municipalityId}/organizations/{orgId}/manager-responsibilities` | Find manager(s) responsible for a specific organization     |
+| `GET /{municipalityId}/persons/{personId}/manager-responsibilities`    | Find responsibilities for a specific person (by UUID)       |
+| `GET /{municipalityId}/logins/{loginName}/manager-responsibilities`    | Find responsibilities for a specific person (by login name) |
+
+### Example Requests
+
+**Find manager responsible for organization 123:**
 
 ```bash
-curl -X GET http://localhost:8080/{municipalityId}/organizations/{orgId}/manager-responsibilities
+curl -X GET http://localhost:8080/2281/organizations/123/manager-responsibilities
+```
+
+**Find responsibilities for a person by UUID:**
+
+```bash
+curl -X GET http://localhost:8080/2281/persons/35532a17-26a0-4438-970c-375465ff1aff/manager-responsibilities
+```
+
+**Find responsibilities for a person by login name:**
+
+```bash
+curl -X GET http://localhost:8080/2281/logins/joe01doe/manager-responsibilities
+```
+
+### Example Response
+
+```json
+[
+  {
+    "personId": "35532a17-26a0-4438-970c-375465ff1aff",
+    "loginName": "joe01doe",
+    "orgList": ["123", "456", "789"]
+  }
+]
 ```
 
 ## Configuration
@@ -87,6 +145,27 @@ Configuration is crucial for the application to run successfully. Ensure all nec
       url: jdbc:sqlserver://<server address>:<port>;databaseName=<database name>;trustServerCertificate=true
       username: <database user name>
       password: <database user password>
+  ```
+- **Employee API Integration:**
+
+  ```yaml
+  integration:
+    employee:
+      url: <employee service base url>
+      connect-timeout: 5
+      read-timeout: 30
+
+  spring:
+    security:
+      oauth2:
+        client:
+          registration:
+            employee:
+              client-id: <oauth client id>
+              client-secret: <oauth client secret>
+          provider:
+            employee:
+              token-uri: <oauth token endpoint>
   ```
 
 ### Database Initialization

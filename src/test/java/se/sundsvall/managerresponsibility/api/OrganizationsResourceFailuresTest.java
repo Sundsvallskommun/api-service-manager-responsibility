@@ -21,7 +21,7 @@ import se.sundsvall.managerresponsibility.service.ManagerResponsibilityService;
 @SpringBootTest(classes = Application.class, webEnvironment = RANDOM_PORT)
 class OrganizationsResourceFailuresTest {
 
-	private static final String ORG_ID = "orgId";
+	private static final String ORG_ID = "123";
 
 	@MockitoBean
 	private ManagerResponsibilityService managerResponsibilityServiceMock;
@@ -48,6 +48,29 @@ class OrganizationsResourceFailuresTest {
 		assertThat(response.getViolations())
 			.extracting(Violation::getField, Violation::getMessage)
 			.containsExactly(tuple("getManagerResponsibilitiesByOrganizationId.municipalityId", "not a valid municipality ID"));
+
+		verifyNoInteractions(managerResponsibilityServiceMock);
+	}
+
+	@Test
+	void getManagerResponsibilitiesByOrgIdInvalidOrgId() {
+
+		// Act
+		final var response = webTestClient.get()
+			.uri("/{municipalityId}/organizations/{orgId}/manager-responsibilities", "2281", "invalid-orgId")
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		// Assert
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations())
+			.extracting(Violation::getField, Violation::getMessage)
+			.containsExactly(tuple("getManagerResponsibilitiesByOrganizationId.orgId", "orgId must contain only digits"));
 
 		verifyNoInteractions(managerResponsibilityServiceMock);
 	}

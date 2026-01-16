@@ -2,6 +2,7 @@ package se.sundsvall.managerresponsibility.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -33,7 +34,7 @@ class OrganizationsResourceTest {
 	void getManagerResponsibilitiesByOrgId() {
 
 		// Arrange
-		final var orgId = "orgId";
+		final var orgId = "123";
 		final var expectedResult = List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1")));
 
 		when(managerResponsibilityServiceMock.findByOrgId(orgId)).thenReturn(expectedResult);
@@ -52,5 +53,6 @@ class OrganizationsResourceTest {
 		// Assert
 		assertThat(result).isEqualTo(expectedResult);
 		verify(managerResponsibilityServiceMock).findByOrgId(orgId);
+		verifyNoMoreInteractions(managerResponsibilityServiceMock);
 	}
 }

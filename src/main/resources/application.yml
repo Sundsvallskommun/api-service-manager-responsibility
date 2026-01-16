@@ -24,3 +24,14 @@ spring:
         schema-generation:
           database:
             action: validate
+  security:
+    oauth2:
+      client:
+        registration:
+          employee:
+            authorization-grant-type: client_credentials
+            provider: employee
+integration:
+  employee:
+    connect-timeout: 5
+    read-timeout: 30
