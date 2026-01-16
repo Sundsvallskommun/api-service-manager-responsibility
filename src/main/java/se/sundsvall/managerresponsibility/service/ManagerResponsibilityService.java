@@ -1,6 +1,7 @@
 package se.sundsvall.managerresponsibility.service;
 
 import static java.util.Collections.emptyList;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static se.sundsvall.managerresponsibility.service.mapper.ManagerResponsibilityMapper.toManagerResponsibilityList;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class ManagerResponsibilityService {
 	 * @return       list of manager responsibilities, empty list if orgId is null or blank
 	 */
 	public List<ManagerResponsibility> findByOrgId(final String orgId) {
-		if (orgId == null || orgId.isBlank()) {
+		if (isBlank(orgId)) {
 			LOG.debug("findByOrgId called with null or blank orgId, returning empty list");
 			return emptyList();
 		}
@@ -48,7 +49,7 @@ public class ManagerResponsibilityService {
 	 * @return          list of manager responsibilities, empty list if personId is null or blank
 	 */
 	public List<ManagerResponsibility> findByPersonId(final String personId) {
-		if (personId == null || personId.isBlank()) {
+		if (isBlank(personId)) {
 			LOG.debug("findByPersonId called with null or blank personId, returning empty list");
 			return emptyList();
 		}
@@ -63,7 +64,7 @@ public class ManagerResponsibilityService {
 	 * @return           list of manager responsibilities, empty list if loginName is null or blank
 	 */
 	public List<ManagerResponsibility> findByLoginName(final String loginName) {
-		if (loginName == null || loginName.isBlank()) {
+		if (isBlank(loginName)) {
 			LOG.debug("findByLoginName called with null or blank loginName, returning empty list");
 			return emptyList();
 		}
