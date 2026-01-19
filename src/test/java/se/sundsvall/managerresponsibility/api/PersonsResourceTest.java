@@ -38,7 +38,7 @@ class PersonsResourceTest {
 		final var personId = UUID.randomUUID().toString();
 		final var expectedResult = List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1")));
 
-		when(managerResponsibilityServiceMock.findByPersonId(personId)).thenReturn(expectedResult);
+		when(managerResponsibilityServiceMock.findByPersonId(MUNICIPALITY_ID, personId)).thenReturn(expectedResult);
 
 		// Act
 		final var result = webTestClient.get()
@@ -53,7 +53,7 @@ class PersonsResourceTest {
 
 		// Assert
 		assertThat(result).isEqualTo(expectedResult);
-		verify(managerResponsibilityServiceMock).findByPersonId(personId);
+		verify(managerResponsibilityServiceMock).findByPersonId(MUNICIPALITY_ID, personId);
 		verifyNoMoreInteractions(managerResponsibilityServiceMock);
 	}
 }
