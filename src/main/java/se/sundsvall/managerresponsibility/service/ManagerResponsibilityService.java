@@ -16,6 +16,10 @@ import se.sundsvall.managerresponsibility.integration.employee.EmployeeIntegrati
  * Service for retrieving manager responsibility information.
  * Provides methods to look up managerial organizational responsibilities
  * by organization ID, person ID, or login name.
+ *
+ * <p>
+ * All results are filtered to only include managers who exist in the Employee service.
+ * Entities with null or blank login names are also excluded from results.
  */
 @Service
 public class ManagerResponsibilityService {
@@ -31,9 +35,13 @@ public class ManagerResponsibilityService {
 	/**
 	 * Finds manager responsibilities by organization ID.
 	 *
-	 * @param  municipalityId the municipality ID
+	 * <p>
+	 * Results are filtered to only include managers who exist in the Employee service.
+	 *
+	 * @param  municipalityId the municipality ID used for employee verification
 	 * @param  orgId          the organization ID to search for (can be partial match in pipe-delimited list)
-	 * @return                list of manager responsibilities, empty list if orgId is null or blank
+	 * @return                list of manager responsibilities filtered by existing employees, empty list if orgId is null
+	 *                        or blank
 	 */
 	public List<ManagerResponsibility> findByOrgId(final String municipalityId, final String orgId) {
 		if (isBlank(orgId)) {
@@ -46,9 +54,13 @@ public class ManagerResponsibilityService {
 	/**
 	 * Finds manager responsibilities by person ID (UUID).
 	 *
-	 * @param  municipalityId the municipality ID
+	 * <p>
+	 * Results are filtered to only include managers who exist in the Employee service.
+	 *
+	 * @param  municipalityId the municipality ID used for employee verification
 	 * @param  personId       the person UUID to search for
-	 * @return                list of manager responsibilities, empty list if personId is null or blank
+	 * @return                list of manager responsibilities filtered by existing employees, empty list if personId is
+	 *                        null or blank
 	 */
 	public List<ManagerResponsibility> findByPersonId(final String municipalityId, final String personId) {
 		if (isBlank(personId)) {
@@ -61,9 +73,13 @@ public class ManagerResponsibilityService {
 	/**
 	 * Finds manager responsibilities by login name.
 	 *
-	 * @param  municipalityId the municipality ID
+	 * <p>
+	 * Results are filtered to only include managers who exist in the Employee service.
+	 *
+	 * @param  municipalityId the municipality ID used for employee verification
 	 * @param  loginName      the login name to search for
-	 * @return                list of manager responsibilities, empty list if loginName is null or blank
+	 * @return                list of manager responsibilities filtered by existing employees, empty list if loginName is
+	 *                        null or blank
 	 */
 	public List<ManagerResponsibility> findByLoginName(final String municipalityId, final String loginName) {
 		if (isBlank(loginName)) {
