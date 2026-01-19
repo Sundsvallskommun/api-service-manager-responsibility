@@ -71,7 +71,7 @@ This microservice depends on the following services:
 - **Employee API**
   - **Purpose:** Verify that managers exist in the employee registry. Results are filtered to only include managers who exist in the Employee service.
   - **Configuration:** Requires OAuth2 client credentials (see Configuration section)
-  - **Features:** Circuit breaker pattern for resilience, cached responses (7-day TTL)
+  - **Features:** Circuit breaker pattern for resilience, cached responses (5-day TTL)
 
 Ensure that these services are running and properly configured before starting this microservice.
 
@@ -156,7 +156,7 @@ Configuration is crucial for the application to run successfully. Ensure all nec
     employee:
       url: <employee service base url>
       connect-timeout: 5
-      read-timeout: 30
+      read-timeout: 20
 
   spring:
     security:
@@ -180,11 +180,11 @@ Configuration is crucial for the application to run successfully. Ensure all nec
       type: caffeine
       cache-names: employeeExists
       caffeine:
-        spec: expireAfterWrite=7d,maximumSize=2000
+        spec: expireAfterWrite=5d,maximumSize=3000
   ```
 
-  - **TTL:** 7 days (employee existence is cached for 7 days)
-  - **Max entries:** 2000 (least recently used entries are evicted when limit is reached)
+  - **TTL:** 5 days (employee existence is cached for 5 days)
+  - **Max entries:** 3000 (least recently used entries are evicted when limit is reached)
 
 ### Database Initialization
 
