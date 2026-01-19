@@ -37,7 +37,7 @@ class LoginsResourceTest {
 		final var loginName = "login";
 		final var expectedResult = List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1")));
 
-		when(managerResponsibilityServiceMock.findByLoginName(loginName)).thenReturn(expectedResult);
+		when(managerResponsibilityServiceMock.findByLoginName(MUNICIPALITY_ID, loginName)).thenReturn(expectedResult);
 
 		// Act
 		final var result = webTestClient.get()
@@ -52,7 +52,7 @@ class LoginsResourceTest {
 
 		// Assert
 		assertThat(result).isEqualTo(expectedResult);
-		verify(managerResponsibilityServiceMock).findByLoginName(loginName);
+		verify(managerResponsibilityServiceMock).findByLoginName(MUNICIPALITY_ID, loginName);
 		verifyNoMoreInteractions(managerResponsibilityServiceMock);
 	}
 }

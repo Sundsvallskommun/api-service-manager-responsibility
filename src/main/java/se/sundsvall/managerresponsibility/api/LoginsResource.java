@@ -46,6 +46,6 @@ class LoginsResource {
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@Parameter(name = "loginName", description = "Login name", example = "joe01doe") @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "loginName can only contain letters, digits and underscores") @PathVariable final String loginName) {
 
-		return ok(managerResponsibilityService.findByLoginName(loginName));
+		return ok(managerResponsibilityService.findByLoginName(municipalityId, loginName));
 	}
 }

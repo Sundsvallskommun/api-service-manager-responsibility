@@ -11,6 +11,11 @@ openapi:
 spring:
   application:
     name: api-manager-responsibility
+  cache:
+    type: caffeine
+    cache-names: employeeExists
+    caffeine:
+      spec: expireAfterWrite=5d,maximumSize=3000
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
@@ -34,4 +39,4 @@ spring:
 integration:
   employee:
     connect-timeout: 5
-    read-timeout: 30
+    read-timeout: 20

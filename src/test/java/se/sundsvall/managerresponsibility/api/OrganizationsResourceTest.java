@@ -37,7 +37,7 @@ class OrganizationsResourceTest {
 		final var orgId = "123";
 		final var expectedResult = List.of(ManagerResponsibility.create().withLoginName("loginName").withOrgList(List.of("org1")));
 
-		when(managerResponsibilityServiceMock.findByOrgId(orgId)).thenReturn(expectedResult);
+		when(managerResponsibilityServiceMock.findByOrgId(MUNICIPALITY_ID, orgId)).thenReturn(expectedResult);
 
 		// Act
 		final var result = webTestClient.get()
@@ -52,7 +52,7 @@ class OrganizationsResourceTest {
 
 		// Assert
 		assertThat(result).isEqualTo(expectedResult);
-		verify(managerResponsibilityServiceMock).findByOrgId(orgId);
+		verify(managerResponsibilityServiceMock).findByOrgId(MUNICIPALITY_ID, orgId);
 		verifyNoMoreInteractions(managerResponsibilityServiceMock);
 	}
 }
