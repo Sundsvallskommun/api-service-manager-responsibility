@@ -1,6 +1,6 @@
 # ManagerResponsibility
 
-_This microservice provides read-only access to managerial organizational responsibilities. It exposes which organizations a person (manager) is responsible for and allows lookup from both person and organization perspectives using a REST-ful resource hierarchy. The service consumes an externally owned database table and does not modify the underlying data._
+_This microservice provides read-only access to managerial organizational responsibilities. It exposes which organizations a person (manager) is responsible for and allows lookup from both person and organization perspectives using a REST-ful resource hierarchy. The service consumes an externally owned database table and does not modify the underlying data. Results are filtered to only include managers who exist in the Employee service._
 
 ## Service Description
 
@@ -8,6 +8,8 @@ The ManagerResponsibility service answers questions about managerial organizatio
 
 - **Which organizations is a specific manager responsible for?** - Look up by person ID or login name to get a list of organization IDs the manager oversees.
 - **Who is the manager responsible for a specific organization?** - Look up by organization ID to find the responsible manager(s).
+
+**Note:** All results are filtered against the Employee service to ensure only managers who exist in the employee registry are returned.
 
 ### Data Model
 
@@ -66,9 +68,10 @@ This microservice depends on the following services:
 - **MS SQL Server database**
   - **Purpose:** Read-only access to the `org_edw.vChefOrganisationer` view containing manager responsibility data
   - **Repository:** External database managed by third party
-- **Employee API** (optional)
-  - **Purpose:** Lookup employee portal data by domain and login name
+- **Employee API**
+  - **Purpose:** Verify that managers exist in the employee registry. Results are filtered to only include managers who exist in the Employee service.
   - **Configuration:** Requires OAuth2 client credentials (see Configuration section)
+  - **Features:** Circuit breaker pattern for resilience, cached responses (5-day TTL)
 
 Ensure that these services are running and properly configured before starting this microservice.
 
@@ -153,7 +156,7 @@ Configuration is crucial for the application to run successfully. Ensure all nec
     employee:
       url: <employee service base url>
       connect-timeout: 5
-      read-timeout: 30
+      read-timeout: 20
 
   spring:
     security:
@@ -167,6 +170,21 @@ Configuration is crucial for the application to run successfully. Ensure all nec
             employee:
               token-uri: <oauth token endpoint>
   ```
+- **Caching Configuration:**
+
+  The service uses Caffeine caching to reduce load on the Employee API:
+
+  ```yaml
+  spring:
+    cache:
+      type: caffeine
+      cache-names: employeeExists
+      caffeine:
+        spec: expireAfterWrite=5d,maximumSize=3000
+  ```
+
+  - **TTL:** 5 days (employee existence is cached for 5 days)
+  - **Max entries:** 3000 (least recently used entries are evicted when limit is reached)
 
 ### Database Initialization
 

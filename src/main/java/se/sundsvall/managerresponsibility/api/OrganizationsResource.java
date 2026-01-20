@@ -46,6 +46,6 @@ class OrganizationsResource {
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@Parameter(name = "orgId", description = "Organization ID", example = "123") @Pattern(regexp = "^[0-9]+$", message = "orgId must contain only digits") @PathVariable final String orgId) {
 
-		return ok(managerResponsibilityService.findByOrgId(orgId));
+		return ok(managerResponsibilityService.findByOrgId(municipalityId, orgId));
 	}
 }
