@@ -1,0 +1,13 @@
+{
+	"request": {
+		"method": "GET",
+		"urlPath": "/api-employee/2281/portalpersondata/PERSONAL/user02"
+	},
+	"response": {
+		"headers": {
+			"Content-Type": "application/json"
+		},
+		"body": "{\"loginName\":\"user02\"}",
+		"status": 200
+	}
+}
