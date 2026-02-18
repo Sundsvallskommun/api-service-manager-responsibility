@@ -1,8 +1,5 @@
 package se.sundsvall.managerresponsibility.service.mapper;
 
-import static java.util.Collections.emptyList;
-import static org.apache.commons.lang3.StringUtils.lowerCase;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +7,9 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import se.sundsvall.managerresponsibility.api.model.ManagerResponsibility;
 import se.sundsvall.managerresponsibility.integration.db.model.ManagerResponsibilityEntity;
+
+import static java.util.Collections.emptyList;
+import static org.apache.commons.lang3.StringUtils.lowerCase;
 
 /**
  * Mapper class for converting between {@link ManagerResponsibilityEntity} and {@link ManagerResponsibility} DTOs.
