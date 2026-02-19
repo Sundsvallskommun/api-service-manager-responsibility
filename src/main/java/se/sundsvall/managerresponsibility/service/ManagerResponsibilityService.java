@@ -1,16 +1,16 @@
 package se.sundsvall.managerresponsibility.service;
 
-import static io.micrometer.common.util.StringUtils.isNotBlank;
-import static java.util.Collections.emptyList;
-import static org.apache.commons.lang3.StringUtils.isBlank;
-import static se.sundsvall.managerresponsibility.service.mapper.ManagerResponsibilityMapper.toManagerResponsibilityList;
-
 import java.util.List;
 import org.springframework.stereotype.Service;
 import se.sundsvall.managerresponsibility.api.model.ManagerResponsibility;
 import se.sundsvall.managerresponsibility.integration.db.ManagerResponsibilityRepository;
 import se.sundsvall.managerresponsibility.integration.db.model.ManagerResponsibilityEntity;
 import se.sundsvall.managerresponsibility.integration.employee.EmployeeIntegration;
+
+import static io.micrometer.common.util.StringUtils.isNotBlank;
+import static java.util.Collections.emptyList;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static se.sundsvall.managerresponsibility.service.mapper.ManagerResponsibilityMapper.toManagerResponsibilityList;
 
 /**
  * Service for retrieving manager responsibility information.

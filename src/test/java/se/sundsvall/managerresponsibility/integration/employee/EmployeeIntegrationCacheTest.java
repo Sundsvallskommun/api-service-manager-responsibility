@@ -1,14 +1,5 @@
 package se.sundsvall.managerresponsibility.integration.employee;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static se.sundsvall.managerresponsibility.integration.employee.EmployeeIntegration.DOMAIN;
-import static se.sundsvall.managerresponsibility.integration.employee.EmployeeIntegration.EMPLOYEE_EXISTS_CACHE;
-
 import generated.se.sundsvall.employee.PortalPersonData;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +10,15 @@ import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import se.sundsvall.managerresponsibility.Application;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static se.sundsvall.managerresponsibility.integration.employee.EmployeeIntegration.DOMAIN;
+import static se.sundsvall.managerresponsibility.integration.employee.EmployeeIntegration.EMPLOYEE_EXISTS_CACHE;
 
 @ActiveProfiles("junit")
 @SpringBootTest(classes = Application.class, webEnvironment = RANDOM_PORT)
